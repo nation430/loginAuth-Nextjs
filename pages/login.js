@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { login } from "../lib/api";
+import { setCookies } from "../lib/auth";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -9,15 +10,18 @@ const Login = () => {
 
   const submit = async (e) => {
     e.preventDefault();
-
     const data = {
       email,
       password,
     };
 
     const res = await login(data);
-
-    // await router.push("/todos");
+    if (res.token) {
+      setCookies(res);
+      router.push("/todos");
+    }
+    console.log(res);
+    return false;
   };
 
   return (
@@ -73,10 +77,7 @@ const Login = () => {
           Log In
         </div>
 
-        <form
-          onSubmit={submit}
-          className="sm:w-2/3 w-full px-4 lg:px-0 mx-auto"
-        >
+        <form className="sm:w-2/3 w-full px-4 lg:px-0 mx-auto">
           <div className="pb-2 pt-4">
             <input
               type="email"
@@ -103,8 +104,9 @@ const Login = () => {
           </div>
           <div className="px-4 pb-2 pt-4">
             <button
-              type="submit"
+              type="button"
               className="uppercase block w-full p-4 text-lg rounded-full bg-indigo-500 hover:bg-indigo-600 focus:outline-none"
+              onClick={() => submit()}
             >
               sign in
             </button>
