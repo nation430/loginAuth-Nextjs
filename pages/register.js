@@ -1,8 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { register } from "../lib/api";
-import { useDispatch } from "react-redux";
-import { addUser } from "../lib/redux/slice/authSlice";
+// import { addUser } from "../redux/slice/authSlice";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -10,7 +9,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const router = useRouter();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const submit = async (e) => {
     e.preventDefault();
@@ -22,13 +21,29 @@ const Register = () => {
       confirm_password: confirmPassword,
     };
 
-    const res = await register(data);
-    console.log(res);
+    try {
+      const res = await register(data);
 
-    dispatch(addUser(res));
+      const { token, user } = res;
+      console.log(token);
+
+      router.push("/todos");
+    } catch (error) {}
+
+    // await router.push("/login");
+
+    // dispatch(addUser(res));
 
     // await router.push("/login");
   };
+
+  // useEffect(() => {
+  //   if (!token) {
+  //     router.push("/register");
+  //   } else {
+  //     router.push("/todos");
+  //   }
+  // });
 
   return (
     <section className="min-h-screen flex items-stretch text-white ">
