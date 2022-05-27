@@ -8,19 +8,22 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const router = useRouter();
 
-  const submit = async (e) => {
-    e.preventDefault();
-    const data = {
-      email,
-      password,
-    };
+  const submit = async () => {
+    if (email == "" && password == "") {
+      return false;
+    }
 
-    const res = await login(data);
+    const res = await login({ email, password });
+    if (res === undefined) {
+      return false;
+    }
+
     if (res.token) {
       setCookies(res);
       router.push("/todos");
+      return true;
     }
-    console.log(res);
+
     return false;
   };
 
@@ -106,7 +109,7 @@ const Login = () => {
             <button
               type="button"
               className="uppercase block w-full p-4 text-lg rounded-full bg-indigo-500 hover:bg-indigo-600 focus:outline-none"
-              onClick={() => submit()}
+              onClick={(e) => submit()}
             >
               sign in
             </button>

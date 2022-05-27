@@ -12,9 +12,9 @@ const Todos = () => {
     return setList(useItems);
   };
   useEffect(() => {
-    // setTimeout(() => {
-    //   getToDos();
-    // }, 3000);
+    setTimeout(() => {
+      getToDos();
+    }, 3000);
   }, []);
   return (
     <section>
