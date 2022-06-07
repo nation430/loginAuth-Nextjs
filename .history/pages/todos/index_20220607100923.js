@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { todos } from "../../lib/api";
-import TodoPage from "../todos/TodoPage";
 
 const Todos = () => {
   const [list, setList] = useState([]);
@@ -18,7 +17,7 @@ const Todos = () => {
   }, []);
   return (
     <section>
-      <main className="mt-20 flex w-full flex-1 flex-col items-center text-center">
+      <main className="flex w-full flex-1 flex-col items-center text-center">
         <h1 className="text-6xl font-bold text-gray-900">
           Next.js <span className="text-gray-600">Todo-App!</span>
         </h1>
@@ -28,7 +27,7 @@ const Todos = () => {
         <TodoPage />
       </main>
 
-      <footer className="flex h-24 w-full items-center justify-center absolute bottom-0">
+      <footer className="flex h-24 w-full items-center justify-center">
         <p className="flex items-center justify-center">
           With &#128151; from T.Nation
         </p>

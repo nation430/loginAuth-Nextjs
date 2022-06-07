@@ -18,7 +18,7 @@ const Todos = () => {
   }, []);
   return (
     <section>
-      <main className="mt-20 flex w-full flex-1 flex-col items-center text-center">
+      <main className="flex w-full flex-1 flex-col items-center text-center">
         <h1 className="text-6xl font-bold text-gray-900">
           Next.js <span className="text-gray-600">Todo-App!</span>
         </h1>

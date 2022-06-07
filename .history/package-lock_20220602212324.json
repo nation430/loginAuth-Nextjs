@@ -16,9 +16,7 @@
         "next-cookies": "^2.0.3",
         "react": "18.1.0",
         "react-dom": "18.1.0",
-        "react-hook-form": "^7.31.3",
-        "react-redux": "^8.0.2",
-        "uniqid": "^5.4.0"
+   
       },
       "devDependencies": {
         "autoprefixer": "^10.4.7",
@@ -3283,21 +3281,6 @@
         "react": "^18.1.0"
       }
     },
-    "node_modules/react-hook-form": {
-      "version": "7.31.3",
-      "resolved": "https://registry.npmjs.org/react-hook-form/-/react-hook-form-7.31.3.tgz",
-      "integrity": "sha512-NVZdCWViIWXXXlQ3jxVQH0NuNfwPf8A/0KvuCxrM9qxtP1qYosfR2ZudarziFrVOC7eTUbWbm1T4OyYCwv9oSQ==",
-      "engines": {
-        "node": ">=12.22.0"
-      },
-      "funding": {
-        "type": "opencollective",
-        "url": "https://opencollective.com/react-hook-form"
-      },
-      "peerDependencies": {
-        "react": "^16.8.0 || ^17 || ^18"
-      }
-    },
     "node_modules/react-is": {
       "version": "16.13.1",
       "resolved": "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz",
@@ -3902,11 +3885,6 @@
       "funding": {
         "url": "https://github.com/sponsors/ljharb"
       }
-    },
-    "node_modules/uniqid": {
-      "version": "5.4.0",
-      "resolved": "https://registry.npmjs.org/uniqid/-/uniqid-5.4.0.tgz",
-      "integrity": "sha512-38JRbJ4Fj94VmnC7G/J/5n5SC7Ab46OM5iNtSstB/ko3l1b5g7ALt4qzHFgGciFkyiRNtDXtLNb+VsxtMSE77A=="
     },
     "node_modules/universal-cookie": {
       "version": "4.0.4",
@@ -6315,12 +6293,6 @@
         "scheduler": "^0.22.0"
       }
     },
-    "react-hook-form": {
-      "version": "7.31.3",
-      "resolved": "https://registry.npmjs.org/react-hook-form/-/react-hook-form-7.31.3.tgz",
-      "integrity": "sha512-NVZdCWViIWXXXlQ3jxVQH0NuNfwPf8A/0KvuCxrM9qxtP1qYosfR2ZudarziFrVOC7eTUbWbm1T4OyYCwv9oSQ==",
-      "requires": {}
-    },
     "react-is": {
       "version": "16.13.1",
       "resolved": "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz",
@@ -6731,11 +6703,6 @@
         "has-symbols": "^1.0.3",
         "which-boxed-primitive": "^1.0.2"
       }
-    },
-    "uniqid": {
-      "version": "5.4.0",
-      "resolved": "https://registry.npmjs.org/uniqid/-/uniqid-5.4.0.tgz",
-      "integrity": "sha512-38JRbJ4Fj94VmnC7G/J/5n5SC7Ab46OM5iNtSstB/ko3l1b5g7ALt4qzHFgGciFkyiRNtDXtLNb+VsxtMSE77A=="
     },
     "universal-cookie": {
       "version": "4.0.4",
