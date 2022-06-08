@@ -1,18 +1,13 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { register } from "../lib/api";
-import { useForm } from "react-hook-form";
-
-// import { addUser } from "../redux/slice/authSlice";
 
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const { register, errors, handleSubmit } = useForm();
   const router = useRouter();
-  // const dispatch = useDispatch();
 
   const submit = async (e) => {
     e.preventDefault();
@@ -102,42 +97,30 @@ const Register = () => {
         </div>
 
         <form
-          onSubmit={handleSubmit(submit)}
+          onSubmit={submit}
           className="sm:w-2/3 w-full px-4 lg:px-0 mx-auto"
         >
           <div className="pb-2 pt-4">
             <input
               type="name"
               name="username"
-              {...register("username", {
-                required: true,
-                pattern: /^[A-Za-z]+$/i,
-              })}
               placeholder="Username"
               className="block w-full p-4 text-lg rounded-sm bg-black"
+              required
               autoFocus
               onChange={(e) => setName(e.target.value)}
             />
-            {errors.username?.type === "required" && "username is required"}
           </div>
           <div className="pb-2 pt-4">
             <input
               type="email"
               name="email"
-              {...register("email", {
-                required: "Email is required",
-                pattern: {
-                  value: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
-                  message: "Please enter a valid email",
-                },
-              })}
               placeholder="Email"
               className="block w-full p-4 text-lg rounded-sm bg-black"
               required
               autoFocus
               onChange={(e) => setEmail(e.target.value)}
             />
-            {errors?.email && <ErrorMessage message={errors.email.message} />}
           </div>
           <div className="pb-2 pt-4">
             <input

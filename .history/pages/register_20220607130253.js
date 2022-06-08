@@ -109,16 +109,13 @@ const Register = () => {
             <input
               type="name"
               name="username"
-              {...register("username", {
-                required: true,
-                pattern: /^[A-Za-z]+$/i,
-              })}
+              {...register("userName", { required: true })}
               placeholder="Username"
               className="block w-full p-4 text-lg rounded-sm bg-black"
               autoFocus
               onChange={(e) => setName(e.target.value)}
             />
-            {errors.username?.type === "required" && "username is required"}
+            {errors.userName?.type === "required" && "username is required"}
           </div>
           <div className="pb-2 pt-4">
             <input

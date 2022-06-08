@@ -109,35 +109,28 @@ const Register = () => {
             <input
               type="name"
               name="username"
-              {...register("username", {
+              {...register("name", {
                 required: true,
-                pattern: /^[A-Za-z]+$/i,
               })}
               placeholder="Username"
               className="block w-full p-4 text-lg rounded-sm bg-black"
               autoFocus
               onChange={(e) => setName(e.target.value)}
             />
-            {errors.username?.type === "required" && "username is required"}
+            {errors.name && errors.name.type == "required" && (
+              <p className="text-danger">Please enter the full name</p>
+            )}
           </div>
           <div className="pb-2 pt-4">
             <input
               type="email"
               name="email"
-              {...register("email", {
-                required: "Email is required",
-                pattern: {
-                  value: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
-                  message: "Please enter a valid email",
-                },
-              })}
               placeholder="Email"
               className="block w-full p-4 text-lg rounded-sm bg-black"
               required
               autoFocus
               onChange={(e) => setEmail(e.target.value)}
             />
-            {errors?.email && <ErrorMessage message={errors.email.message} />}
           </div>
           <div className="pb-2 pt-4">
             <input

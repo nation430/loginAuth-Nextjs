@@ -109,10 +109,7 @@ const Register = () => {
             <input
               type="name"
               name="username"
-              {...register("username", {
-                required: true,
-                pattern: /^[A-Za-z]+$/i,
-              })}
+              {...register("username", { required: true })}
               placeholder="Username"
               className="block w-full p-4 text-lg rounded-sm bg-black"
               autoFocus
