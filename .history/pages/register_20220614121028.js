@@ -32,7 +32,7 @@ const Register = () => {
 
     if (result.errLength) {
       setErrorss(result.errMsg);
-      toast.success("Registration Successful");
+      toast.success("ghdvrhd");
       console.log(errorss);
 
       return toast.error(() => <Toast title="Error" body={result.errMsg} />);
@@ -69,7 +69,7 @@ const Register = () => {
       <div className="lg:flex w-1/2 bg-gray-500  relative items-center">
         <div className="w-full px-20 ">
           {errorss?.map((err, index) => {
-            <h4>Cant Register</h4>;
+            <h4>ghfbtjf</h4>;
           })}
 
           <h1 className="text-4xl font-bold text-left tracking-wide">
@@ -122,7 +122,7 @@ const Register = () => {
         </div>
 
         <form
-          onSubmit={handleSubmit}
+          onSubmit={handleSubmitt}
           className="sm:w-2/3 w-full px-4 lg:px-0 mx-auto"
         >
           <div className="pb-2 pt-4">

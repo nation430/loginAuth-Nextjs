@@ -32,7 +32,7 @@ const Register = () => {
 
     if (result.errLength) {
       setErrorss(result.errMsg);
-      toast.success("Registration Successful");
+      toast.success("ghdvrhd");
       console.log(errorss);
 
       return toast.error(() => <Toast title="Error" body={result.errMsg} />);
@@ -122,7 +122,7 @@ const Register = () => {
         </div>
 
         <form
-          onSubmit={handleSubmit}
+          onSubmit={handleSubmitt}
           className="sm:w-2/3 w-full px-4 lg:px-0 mx-auto"
         >
           <div className="pb-2 pt-4">

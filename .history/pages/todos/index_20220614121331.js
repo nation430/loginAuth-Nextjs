@@ -3,7 +3,6 @@ import { todos } from "../../lib/api";
 import TodoPage from "../todos/TodoPage";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-toast.configure();
 
 const Todos = () => {
   const [list, setList] = useState([]);
@@ -29,7 +28,6 @@ const Todos = () => {
         <p className="mt-3 text-2xl mb-8">Get started by listing your items</p>
 
         <TodoPage />
-        <ToastContainer autoClose={5000} />
       </main>
 
       <footer className="flex h-24 w-full items-center justify-center absolute bottom-0">

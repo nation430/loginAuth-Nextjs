@@ -3,7 +3,6 @@ import { todos } from "../../lib/api";
 import TodoPage from "../todos/TodoPage";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-toast.configure();
 
 const Todos = () => {
   const [list, setList] = useState([]);
