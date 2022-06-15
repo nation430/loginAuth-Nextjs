@@ -114,7 +114,7 @@ const Register = () => {
         </div>
 
         <form
-          onSubmit={submit}
+          onSubmit={handleSubmit(onSubmit)}
           className="sm:w-2/3 w-full px-4 lg:px-0 mx-auto"
         >
           <div className="pb-2 pt-4">
@@ -136,7 +136,7 @@ const Register = () => {
               type="email"
               name="email"
               {...register("email", {
-                required: "Email is Required",
+                required: "Email is required",
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                   message: "Invalid email address",
@@ -156,13 +156,7 @@ const Register = () => {
               className="block w-full p-4 text-lg rounded-sm bg-black"
               type="password"
               name="password"
-              {...register("password", {
-                required: "Password is Required",
-                minLength: {
-                  value: 8,
-                  message: "Password must have at least 8 characters",
-                },
-              })}
+              {...register("password", { required: "password is required" })}
               placeholder="Password"
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -177,9 +171,7 @@ const Register = () => {
               type="password"
               name="password"
               {...register("confirmPassword", {
-                required: "confirmPassword is Required",
-                validate: (value) =>
-                  value === password.current || "The passwords do not match",
+                required: "confirmPassword is required",
               })}
               placeholder=" confirm Password"
               onChange={(e) => setConfirmPassword(e.target.value)}
@@ -191,7 +183,6 @@ const Register = () => {
           <div className="px-4 pb-2 pt-4">
             <button
               type="submit"
-              onClick={handleSubmit(onSubmit)}
               className="uppercase block w-full p-4 text-lg rounded-full bg-indigo-500 hover:bg-indigo-600 focus:outline-none"
             >
               Register

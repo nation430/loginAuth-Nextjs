@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { register } from "../lib/api";
 import { useForm } from "react-hook-form";
+import { validateRegisterDetails } from "../utils/validation";
 
 // import { addUser } from "../redux/slice/authSlice";
 
@@ -10,20 +11,12 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const [errorss, setErrorss] = useState([]);
+  const { register, errors, handleSubmit } = useForm();
   const router = useRouter();
   // const dispatch = useDispatch();
 
-  const onSubmit = (data) => {
-    console.log(data);
-  };
-  // console.log(errors);
-
-  const submit = async (e) => {
+  const handleSubmitt = async (e) => {
     e.preventDefault();
 
     const data = {
@@ -33,14 +26,23 @@ const Register = () => {
       confirm_password: confirmPassword,
     };
 
-    try {
+    const result = validateRegisterDetails(data);
+
+    if (result.errLength) {
+      setErrorss(result.errMsg);
+      toast.success("Registration Successful");
+      console.log(errorss);
+
+      return toast.error(() => <Toast title="Error" body={result.errMsg} />);
+    } else {
       const res = await register(data);
 
       const { token, user } = res;
       console.log(token);
 
-      router.push("/todos");
-    } catch (error) {}
+      // router.push("/todos");
+    }
+
     // try {
 
     // } catch (error) {}
@@ -64,6 +66,10 @@ const Register = () => {
     <section className="min-h-screen flex items-stretch text-white ">
       <div className="lg:flex w-1/2 bg-gray-500  relative items-center">
         <div className="w-full px-20 ">
+          {errorss?.map((err, index) => {
+            <h4>Cant Register</h4>;
+          })}
+
           <h1 className="text-4xl font-bold text-left tracking-wide">
             Keep it special
           </h1>
@@ -114,61 +120,50 @@ const Register = () => {
         </div>
 
         <form
-          onSubmit={submit}
+          onSubmit={handleSubmit}
           className="sm:w-2/3 w-full px-4 lg:px-0 mx-auto"
         >
           <div className="pb-2 pt-4">
             <input
               type="name"
               name="username"
-              {...register("username", { required: "username is required" })}
+              // {...register("username", {
+              //   required: true,
+              //   pattern: /^[A-Za-z]+$/i,
+              // })}
               placeholder="Username"
               className="block w-full p-4 text-lg rounded-sm bg-black"
               autoFocus
               onChange={(e) => setName(e.target.value)}
             />
-            {errors.username && (
-              <p className="text-red-600">{errors.username.message}</p>
-            )}
+            {/* {errors.username?.type === "required" && "username is required"} */}
           </div>
           <div className="pb-2 pt-4">
             <input
               type="email"
               name="email"
-              {...register("email", {
-                required: "Email is Required",
-                pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: "Invalid email address",
-                },
-              })}
+              // {...register("email", {
+              //   required: "Email is required",
+              //   pattern: {
+              //     value: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
+              //     message: "Please enter a valid email",
+              //   },
+              // })}
               placeholder="Email"
               className="block w-full p-4 text-lg rounded-sm bg-black"
               autoFocus
               onChange={(e) => setEmail(e.target.value)}
             />
-            {errors.email && (
-              <p className="text-red-600">{errors.email.message}</p>
-            )}
+            {/* {errors?.email && <ErrorMessage message={errors.email.message} />} */}
           </div>
           <div className="pb-2 pt-4">
             <input
               className="block w-full p-4 text-lg rounded-sm bg-black"
               type="password"
               name="password"
-              {...register("password", {
-                required: "Password is Required",
-                minLength: {
-                  value: 8,
-                  message: "Password must have at least 8 characters",
-                },
-              })}
               placeholder="Password"
               onChange={(e) => setPassword(e.target.value)}
             />
-            {errors.password && (
-              <p className="text-red-600">{errors.password.message}</p>
-            )}
           </div>
 
           <div className="pb-2 pt-4">
@@ -176,22 +171,13 @@ const Register = () => {
               className="block w-full p-4 text-lg rounded-sm bg-black"
               type="password"
               name="password"
-              {...register("confirmPassword", {
-                required: "confirmPassword is Required",
-                validate: (value) =>
-                  value === password.current || "The passwords do not match",
-              })}
               placeholder=" confirm Password"
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
-            {errors.confirmPassword && (
-              <p className="text-red-600">{errors.confirmPassword.message}</p>
-            )}
           </div>
           <div className="px-4 pb-2 pt-4">
             <button
               type="submit"
-              onClick={handleSubmit(onSubmit)}
               className="uppercase block w-full p-4 text-lg rounded-full bg-indigo-500 hover:bg-indigo-600 focus:outline-none"
             >
               Register

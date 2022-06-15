@@ -114,7 +114,7 @@ const Register = () => {
         </div>
 
         <form
-          onSubmit={submit}
+          onSubmit={handleSubmit(onSubmit)}
           className="sm:w-2/3 w-full px-4 lg:px-0 mx-auto"
         >
           <div className="pb-2 pt-4">
@@ -128,27 +128,21 @@ const Register = () => {
               onChange={(e) => setName(e.target.value)}
             />
             {errors.username && (
-              <p className="text-red-600">{errors.username.message}</p>
+              <p className="text-red-600">(errors.username.message)</p>
             )}
           </div>
           <div className="pb-2 pt-4">
             <input
               type="email"
               name="email"
-              {...register("email", {
-                required: "Email is Required",
-                pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: "Invalid email address",
-                },
-              })}
+              {...register("email", { required: "email is required" })}
               placeholder="Email"
               className="block w-full p-4 text-lg rounded-sm bg-black"
               autoFocus
               onChange={(e) => setEmail(e.target.value)}
             />
             {errors.email && (
-              <p className="text-red-600">{errors.email.message}</p>
+              <p className="text-red-600">(errors.email.message)</p>
             )}
           </div>
           <div className="pb-2 pt-4">
@@ -156,18 +150,12 @@ const Register = () => {
               className="block w-full p-4 text-lg rounded-sm bg-black"
               type="password"
               name="password"
-              {...register("password", {
-                required: "Password is Required",
-                minLength: {
-                  value: 8,
-                  message: "Password must have at least 8 characters",
-                },
-              })}
+              {...register("password", { required: "password is required" })}
               placeholder="Password"
               onChange={(e) => setPassword(e.target.value)}
             />
             {errors.password && (
-              <p className="text-red-600">{errors.password.message}</p>
+              <p className="text-red-600">(errors.password.message)</p>
             )}
           </div>
 
@@ -177,21 +165,18 @@ const Register = () => {
               type="password"
               name="password"
               {...register("confirmPassword", {
-                required: "confirmPassword is Required",
-                validate: (value) =>
-                  value === password.current || "The passwords do not match",
+                required: "confirmPassword is required",
               })}
-              placeholder=" confirm Password"
+              ceholder=" confirm Password"
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
             {errors.confirmPassword && (
-              <p className="text-red-600">{errors.confirmPassword.message}</p>
+              <p className="text-red-600">(errors.confirmPassword.message)</p>
             )}
           </div>
           <div className="px-4 pb-2 pt-4">
             <button
               type="submit"
-              onClick={handleSubmit(onSubmit)}
               className="uppercase block w-full p-4 text-lg rounded-full bg-indigo-500 hover:bg-indigo-600 focus:outline-none"
             >
               Register

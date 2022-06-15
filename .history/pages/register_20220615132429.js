@@ -18,11 +18,6 @@ const Register = () => {
   const router = useRouter();
   // const dispatch = useDispatch();
 
-  const onSubmit = (data) => {
-    console.log(data);
-  };
-  // console.log(errors);
-
   const submit = async (e) => {
     e.preventDefault();
 
@@ -114,21 +109,21 @@ const Register = () => {
         </div>
 
         <form
-          onSubmit={submit}
+          onSubmit={handleSubmit(submit)}
           className="sm:w-2/3 w-full px-4 lg:px-0 mx-auto"
         >
           <div className="pb-2 pt-4">
             <input
               type="name"
               name="username"
-              {...register("username", { required: "username is required" })}
+              {...register("username", { required: true, maxLength: 10 })}
               placeholder="Username"
               className="block w-full p-4 text-lg rounded-sm bg-black"
               autoFocus
               onChange={(e) => setName(e.target.value)}
             />
-            {errors.username && (
-              <p className="text-red-600">{errors.username.message}</p>
+            {errors.password && (
+              <p className="text-gray-900">Username is required</p>
             )}
           </div>
           <div className="pb-2 pt-4">
@@ -136,19 +131,17 @@ const Register = () => {
               type="email"
               name="email"
               {...register("email", {
-                required: "Email is Required",
-                pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: "Invalid email address",
-                },
+                required: true,
+                pattern:
+                  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
               })}
               placeholder="Email"
               className="block w-full p-4 text-lg rounded-sm bg-black"
               autoFocus
               onChange={(e) => setEmail(e.target.value)}
             />
-            {errors.email && (
-              <p className="text-red-600">{errors.email.message}</p>
+            {errors.password && (
+              <p className="text-gray-900">email is required</p>
             )}
           </div>
           <div className="pb-2 pt-4">
@@ -157,17 +150,14 @@ const Register = () => {
               type="password"
               name="password"
               {...register("password", {
-                required: "Password is Required",
-                minLength: {
-                  value: 8,
-                  message: "Password must have at least 8 characters",
-                },
+                required: true,
+                pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,15}$/,
               })}
               placeholder="Password"
               onChange={(e) => setPassword(e.target.value)}
             />
             {errors.password && (
-              <p className="text-red-600">{errors.password.message}</p>
+              <p className="text-gray-900">Please check the Password</p>
             )}
           </div>
 
@@ -177,21 +167,19 @@ const Register = () => {
               type="password"
               name="password"
               {...register("confirmPassword", {
-                required: "confirmPassword is Required",
-                validate: (value) =>
-                  value === password.current || "The passwords do not match",
+                required: true,
+                pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,15}$/,
               })}
               placeholder=" confirm Password"
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
-            {errors.confirmPassword && (
-              <p className="text-red-600">{errors.confirmPassword.message}</p>
+            {errors.password && (
+              <p className="text-gray-900">Please confirm your Password</p>
             )}
           </div>
           <div className="px-4 pb-2 pt-4">
             <button
               type="submit"
-              onClick={handleSubmit(onSubmit)}
               className="uppercase block w-full p-4 text-lg rounded-full bg-indigo-500 hover:bg-indigo-600 focus:outline-none"
             >
               Register
