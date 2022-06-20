@@ -125,8 +125,8 @@ const Register = () => {
               autoFocus
               // onChange={(e) => setName(e.target.value)}
             />
-            {errors.name && (
-              <p className="text-red-600">{errors.name.message}</p>
+            {errors.username && (
+              <p className="text-red-600">{errors.username.message}</p>
             )}
           </div>
           <div className="pb-2 pt-4">
@@ -179,25 +179,25 @@ const Register = () => {
             <input
               className="block w-full p-4 text-lg rounded-sm bg-black"
               type="password"
-              name="confirm_password"
-              {...register("confirm_password", {
-                required: "confirm_password is Required",
+              name="confirmPassword"
+              {...register("confirmPassword", {
+                required: "confirmPassword is Required",
                 validate: (value) => {
-                  console.log(watch("confirm_password"), value);
+                  console.log(watch("confirmPassword"), value);
                   return (
-                    value === watch("confirm_password") ||
+                    value === watch("confirmPassword") ||
                     "The passwords do not match"
                   );
                 },
               })}
               onKeyUp={() => {
-                trigger("confirm_password");
+                trigger("password");
               }}
-              placeholder="confirmPassword"
+              placeholder=" confirm Password"
               // onChange={(e) => setConfirmPassword(e.target.value)}
             />
-            {errors.confirm_password && (
-              <p className="text-red-600">{errors.confirm_password.message}</p>
+            {errors.confirmPassword && (
+              <p className="text-red-600">{errors.confirmPassword.message}</p>
             )}
           </div>
           <div className="px-4 pb-2 pt-4">

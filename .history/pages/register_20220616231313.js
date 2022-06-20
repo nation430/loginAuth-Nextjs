@@ -1,5 +1,6 @@
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { register as signIn } from "../lib/api";
+import { register } from "../lib/api";
 import { useForm } from "react-hook-form";
 
 // import { addUser } from "../redux/slice/authSlice";
@@ -24,7 +25,7 @@ const Register = () => {
 
   const onSubmit = async (data) => {
     try {
-      const res = await signIn(data);
+      const res = await register(data);
       console.log(res);
 
       const { token, user } = res;
@@ -113,20 +114,20 @@ const Register = () => {
           <div className="pb-2 pt-4">
             <input
               type="name"
-              name="name"
-              {...register("name", { required: "name is Required" })}
+              name="username"
+              {...register("username", { required: "Username is Required" })}
               onKeyUp={() => {
-                trigger("name");
+                trigger("username");
               }}
-              placeholder="username"
+              placeholder="Username"
               className={`block w-full p-4 text-lg rounded-sm bg-black ${
                 errors.name && "invalid"
               }`}
               autoFocus
               // onChange={(e) => setName(e.target.value)}
             />
-            {errors.name && (
-              <p className="text-red-600">{errors.name.message}</p>
+            {errors.username && (
+              <p className="text-red-600">{errors.username.message}</p>
             )}
           </div>
           <div className="pb-2 pt-4">
@@ -179,25 +180,24 @@ const Register = () => {
             <input
               className="block w-full p-4 text-lg rounded-sm bg-black"
               type="password"
-              name="confirm_password"
-              {...register("confirm_password", {
-                required: "confirm_password is Required",
+              name="confirmPassword"
+              {...register("confirmPassword", {
+                required: "confirmPassword is Required",
                 validate: (value) => {
-                  console.log(watch("confirm_password"), value);
+                  console.log(watch("password"), value);
                   return (
-                    value === watch("confirm_password") ||
-                    "The passwords do not match"
+                    value === watch("password") || "The passwords do not match"
                   );
                 },
               })}
               onKeyUp={() => {
-                trigger("confirm_password");
+                trigger("password");
               }}
-              placeholder="confirmPassword"
+              placeholder=" confirm Password"
               // onChange={(e) => setConfirmPassword(e.target.value)}
             />
-            {errors.confirm_password && (
-              <p className="text-red-600">{errors.confirm_password.message}</p>
+            {errors.confirmPassword && (
+              <p className="text-red-600">{errors.confirmPassword.message}</p>
             )}
           </div>
           <div className="px-4 pb-2 pt-4">

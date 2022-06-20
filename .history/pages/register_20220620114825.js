@@ -193,7 +193,7 @@ const Register = () => {
               onKeyUp={() => {
                 trigger("confirm_password");
               }}
-              placeholder="confirmPassword"
+              placeholder="confirm_password"
               // onChange={(e) => setConfirmPassword(e.target.value)}
             />
             {errors.confirm_password && (

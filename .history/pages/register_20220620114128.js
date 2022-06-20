@@ -181,7 +181,7 @@ const Register = () => {
               type="password"
               name="confirm_password"
               {...register("confirm_password", {
-                required: "confirm_password is Required",
+                required: "confirmPassword is Required",
                 validate: (value) => {
                   console.log(watch("confirm_password"), value);
                   return (
@@ -193,11 +193,11 @@ const Register = () => {
               onKeyUp={() => {
                 trigger("confirm_password");
               }}
-              placeholder="confirmPassword"
+              placeholder=" confirm Password"
               // onChange={(e) => setConfirmPassword(e.target.value)}
             />
-            {errors.confirm_password && (
-              <p className="text-red-600">{errors.confirm_password.message}</p>
+            {errors.confirmPassword && (
+              <p className="text-red-600">{errors.confirmPassword.message}</p>
             )}
           </div>
           <div className="px-4 pb-2 pt-4">

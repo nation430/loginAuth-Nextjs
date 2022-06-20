@@ -28,7 +28,3 @@ top: 111px;
 background: rgba(0, 0, 0, 0.45);
   
 }
-
-.invalid {
-  border:1px solid red !important;
- }
