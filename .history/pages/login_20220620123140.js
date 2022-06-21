@@ -1,19 +1,24 @@
-import { useState } from "react";
 import { useRouter } from "next/router";
-import { login } from "../lib/api";
+import { login as signIn } from "../lib/api";
 import { setCookies } from "../lib/auth";
+import { useForm } from "react-hook-form";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    trigger,
+    watch,
+  } = useForm();
   const router = useRouter();
 
-  const submit = async () => {
-    if (email == "" && password == "") {
+  const onSubmit = async (data) => {
+    if (data) {
       return false;
     }
 
-    const res = await login({ email, password });
+    const res = await signIn({ data });
     if (res === undefined) {
       return false;
     }
@@ -80,27 +85,60 @@ const Login = () => {
           Log In
         </div>
 
-        <form className="sm:w-2/3 w-full px-4 lg:px-0 mx-auto">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="sm:w-2/3 w-full px-4 lg:px-0 mx-auto"
+        >
           <div className="pb-2 pt-4">
             <input
               type="email"
               name="email"
+              {...register("email", {
+                required: "Email is Required",
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: "Invalid email address",
+                },
+              })}
+              onKeyUp={() => {
+                trigger("email");
+              }}
               placeholder="Email"
               className="block w-full p-4 text-lg rounded-sm bg-black"
-              required
               autoFocus
-              onChange={(e) => setEmail(e.target.value)}
+              // onChange={(e) => setEmail(e.target.value)}
             />
+            {errors.email && (
+              <p className="text-red-600">{errors.email.message}</p>
+            )}
           </div>
           <div className="pb-2 pt-4">
             <input
               className="block w-full p-4 text-lg rounded-sm bg-black"
               type="password"
               name="password"
+              {...register("password", {
+                required: "Password is Required",
+                minLength: {
+                  value: 8,
+                  message: "Password must have at least 8 characters",
+                },
+                validate: (value) => {
+                  console.log(watch("password"), value);
+                  return (
+                    value === watch("password") || "The passwords do not match"
+                  );
+                },
+              })}
+              onKeyUp={() => {
+                trigger("password");
+              }}
               placeholder="Password"
-              required
-              onChange={(e) => setPassword(e.target.value)}
+              // onChange={(e) => setPassword(e.target.value)}
             />
+            {errors.password && (
+              <p className="text-red-600">{errors.password.message}</p>
+            )}
           </div>
           <div className="text-right text-gray-400 hover:underline hover:text-gray-900">
             <a href="#">Forgot your password?</a>
@@ -109,7 +147,7 @@ const Login = () => {
             <button
               type="button"
               className="uppercase block w-full p-4 text-lg rounded-full bg-indigo-500 hover:bg-indigo-600 focus:outline-none"
-              onClick={(e) => submit()}
+              // onClick={(e) => onSubmit()}
             >
               sign in
             </button>

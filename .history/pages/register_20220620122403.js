@@ -1,31 +1,57 @@
-import { useState } from "react";
 import { useRouter } from "next/router";
-import { login } from "../lib/api";
-import { setCookies } from "../lib/auth";
+import { register as signIn } from "../lib/api";
+import { useForm } from "react-hook-form";
 
-const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+// import { addUser } from "../redux/slice/authSlice";
+
+const Register = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    trigger,
+    watch,
+  } = useForm();
   const router = useRouter();
+  // const dispatch = useDispatch();
 
-  const submit = async () => {
-    if (email == "" && password == "") {
-      return false;
-    }
+  // const onSubmit = (data) => {
+  //   console.log(data);
+  // };
 
-    const res = await login({ email, password });
-    if (res === undefined) {
-      return false;
-    }
+  // console.log(watch);
+  // console.log(errors);
 
-    if (res.token) {
-      setCookies(res);
+  const onSubmit = async (data) => {
+    try {
+      const res = await signIn(data);
+      console.log(res);
+
+      const { token, user } = res;
+      console.log(token);
+
       router.push("/todos");
-      return true;
+    } catch (error) {
+      console.log(error);
     }
+    // try {
 
-    return false;
+    // } catch (error) {}
+
+    // await router.push("/login");
+
+    // dispatch(addUser(res));
+
+    // await router.push("/login");
   };
+
+  // useEffect(() => {
+  //   if (!token) {
+  //     router.push("/register");
+  //   } else {
+  //     router.push("/todos");
+  //   }
+  // });
 
   return (
     <section className="min-h-screen flex items-stretch text-white ">
@@ -76,42 +102,110 @@ const Login = () => {
       </div>
 
       <div className="w-full py-6 z-20 mt-32">
-        <div className="lg:flex justify-center py-6 text-3xl text-gray-900 font-semibold ">
-          Log In
+        <div className="lg:flex justify-center py-6 text-3xl text-gray-900 font-semibold">
+          Register
         </div>
 
-        <form className="sm:w-2/3 w-full px-4 lg:px-0 mx-auto">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="sm:w-2/3 w-full px-4 lg:px-0 mx-auto"
+        >
+          <div className="pb-2 pt-4">
+            <input
+              type="name"
+              name="name"
+              {...register("name", { required: "name is Required" })}
+              onKeyUp={() => {
+                trigger("name");
+              }}
+              placeholder="username"
+              className={`block w-full p-4 text-lg rounded-sm bg-black ${
+                errors.name && "invalid"
+              }`}
+              autoFocus
+              // onChange={(e) => setName(e.target.value)}
+            />
+            {errors.name && (
+              <p className="text-red-600">{errors.name.message}</p>
+            )}
+          </div>
           <div className="pb-2 pt-4">
             <input
               type="email"
               name="email"
+              {...register("email", {
+                required: "Email is Required",
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: "Invalid email address",
+                },
+              })}
+              onKeyUp={() => {
+                trigger("email");
+              }}
               placeholder="Email"
               className="block w-full p-4 text-lg rounded-sm bg-black"
-              required
               autoFocus
-              onChange={(e) => setEmail(e.target.value)}
+              // onChange={(e) => setEmail(e.target.value)}
             />
+            {errors.email && (
+              <p className="text-red-600">{errors.email.message}</p>
+            )}
           </div>
           <div className="pb-2 pt-4">
             <input
               className="block w-full p-4 text-lg rounded-sm bg-black"
               type="password"
               name="password"
+              {...register("password", {
+                required: "Password is Required",
+                minLength: {
+                  value: 8,
+                  message: "Password must have at least 8 characters",
+                },
+              })}
+              onKeyUp={() => {
+                trigger("password");
+              }}
               placeholder="Password"
-              required
-              onChange={(e) => setPassword(e.target.value)}
+              // onChange={(e) => setPassword(e.target.value)}
             />
+            {errors.password && (
+              <p className="text-red-600">{errors.password.message}</p>
+            )}
           </div>
-          <div className="text-right text-gray-400 hover:underline hover:text-gray-900">
-            <a href="#">Forgot your password?</a>
+
+          <div className="pb-2 pt-4">
+            <input
+              className="block w-full p-4 text-lg rounded-sm bg-black"
+              type="password"
+              name="confirm_password"
+              {...register("confirm_password", {
+                required: "confirm_password is Required",
+                validate: (value) => {
+                  console.log(watch("confirm_password"), value);
+                  return (
+                    value === watch("confirm_password") ||
+                    "The passwords do not match"
+                  );
+                },
+              })}
+              onKeyUp={() => {
+                trigger("confirm_password");
+              }}
+              placeholder="confirmPassword"
+              // onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+            {errors.confirm_password && (
+              <p className="text-red-600">{errors.confirm_password.message}</p>
+            )}
           </div>
           <div className="px-4 pb-2 pt-4">
             <button
-              type="button"
+              type="submit"
               className="uppercase block w-full p-4 text-lg rounded-full bg-indigo-500 hover:bg-indigo-600 focus:outline-none"
-              onClick={(e) => submit()}
             >
-              sign in
+              Register
             </button>
           </div>
         </form>
@@ -120,4 +214,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

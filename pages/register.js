@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { register as signIn } from "../lib/api";
+import { register as signUp } from "../lib/api";
 import { useForm } from "react-hook-form";
 
 // import { addUser } from "../redux/slice/authSlice";
@@ -24,7 +24,7 @@ const Register = () => {
 
   const onSubmit = async (data) => {
     try {
-      const res = await signIn(data);
+      const res = await signUp(data);
       console.log(res);
 
       const { token, user } = res;
