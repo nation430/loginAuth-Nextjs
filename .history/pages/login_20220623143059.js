@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { login as signIn } from "../lib/api";
+import { login } from "../lib/api";
 import { setCookies } from "../lib/auth";
 import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const {
     register,
     handleSubmit,
@@ -14,17 +15,13 @@ const Login = () => {
     watch,
   } = useForm();
   const router = useRouter();
-  const notify = () => toast("Wow so easy!");
 
-  const onSubmit = async (data) => {
-    let email = data.email;
-    let password = data.password;
+  const onSubmit = async () => {
+    if (email == "" && password == "") {
+      return false;
+    }
 
-    // if (email == "" && password == "") {
-    //   return false;
-    // }
-
-    const res = await signIn({ email, password });
+    const res = await login({ email, password });
     if (res === undefined) {
       return false;
     }
@@ -91,7 +88,10 @@ const Login = () => {
           Log In
         </div>
 
-        <form className="sm:w-2/3 w-full px-4 lg:px-0 mx-auto">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="sm:w-2/3 w-full px-4 lg:px-0 mx-auto"
+        >
           <div className="pb-2 pt-4">
             <input
               type="email"
@@ -119,30 +119,34 @@ const Login = () => {
             <input
               className="block w-full p-4 text-lg rounded-sm bg-black"
               type="password"
-              name="password"
+              name="confirm_password"
               {...register("password", {
-                required: "Password is Required",
-                minLength: {
-                  value: 8,
-                  message: "Password must have at least 8 characters",
+                required: "password is Required",
+                validate: (value) => {
+                  console.log(watch("password"), value);
+                  return (
+                    value === watch("password") || "The passwords do not match"
+                  );
                 },
               })}
               onKeyUp={() => {
                 trigger("password");
               }}
-              placeholder="Password"
-              // onChange={(e) => setPassword(e.target.value)}
+              placeholder="password"
+              // onChange={(e) => setConfirmPassword(e.target.value)}
             />
             {errors.password && (
               <p className="text-red-600">{errors.password.message}</p>
             )}
           </div>
-
+          <div className="text-right text-gray-400 hover:underline hover:text-gray-900">
+            <a href="#">Forgot your password?</a>
+          </div>
           <div className="px-4 pb-2 pt-4">
             <button
               type="button"
               className="uppercase block w-full p-4 text-lg rounded-full bg-indigo-500 hover:bg-indigo-600 focus:outline-none"
-              onClick={handleSubmit(onSubmit)}
+              onClick={(e) => onSubmit()}
             >
               sign in
             </button>

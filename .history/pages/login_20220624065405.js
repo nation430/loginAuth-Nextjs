@@ -24,6 +24,11 @@ const Login = () => {
     //   return false;
     // }
 
+    const onSubmit = async (data) => {
+      let email = data.email;
+      let password = data.password;
+    };
+
     const res = await signIn({ email, password });
     if (res === undefined) {
       return false;

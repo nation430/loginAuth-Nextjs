@@ -24,22 +24,13 @@ function MobileNav({ open, setOpen }) {
         <Link
           className=" font-normal   "
           href="/login"
-          // onClick={() =>
-          //   setTimeout(() => {
-          //     setOpen(!open);
-          //   }, 100)
-          // }
         >
           Login
         </Link>
         <Link
           className="font-normal "
           href="/register"
-          // onClick={() =>
-          //   setTimeout(() => {
-          //     setOpen(!open);
-          //   }, 100)
-          // }
+        
         >
           Register
         </Link>

@@ -25,9 +25,8 @@ export const register = async (data) => {
     );
 
     localStorage.setItem("token", res.data.token);
-    alert("welcome todos");
-    return res.data;
 
+    return res.data;
     // const { user, token } = res.data;
     // console.log(user, token);
   } catch (error) {

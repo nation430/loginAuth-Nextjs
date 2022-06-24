@@ -16,13 +16,10 @@ const Login = () => {
   const router = useRouter();
   const notify = () => toast("Wow so easy!");
 
-  const onSubmit = async (data) => {
-    let email = data.email;
-    let password = data.password;
-
-    // if (email == "" && password == "") {
-    //   return false;
-    // }
+  const onSubmit = async () => {
+    if (email == "" && password == "") {
+      return false;
+    }
 
     const res = await signIn({ email, password });
     if (res === undefined) {

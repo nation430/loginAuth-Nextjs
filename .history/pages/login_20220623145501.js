@@ -6,6 +6,8 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
 const Login = () => {
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
   const {
     register,
     handleSubmit,
@@ -16,13 +18,10 @@ const Login = () => {
   const router = useRouter();
   const notify = () => toast("Wow so easy!");
 
-  const onSubmit = async (data) => {
-    let email = data.email;
-    let password = data.password;
-
-    // if (email == "" && password == "") {
-    //   return false;
-    // }
+  const onSubmit = async () => {
+    if (email == "" && password == "") {
+      return false;
+    }
 
     const res = await signIn({ email, password });
     if (res === undefined) {
@@ -91,7 +90,10 @@ const Login = () => {
           Log In
         </div>
 
-        <form className="sm:w-2/3 w-full px-4 lg:px-0 mx-auto">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="sm:w-2/3 w-full px-4 lg:px-0 mx-auto"
+        >
           <div className="pb-2 pt-4">
             <input
               type="email"
@@ -119,18 +121,20 @@ const Login = () => {
             <input
               className="block w-full p-4 text-lg rounded-sm bg-black"
               type="password"
-              name="password"
+              name="confirm_password"
               {...register("password", {
-                required: "Password is Required",
-                minLength: {
-                  value: 8,
-                  message: "Password must have at least 8 characters",
+                required: "password is Required",
+                validate: (value) => {
+                  console.log(watch("password"), value);
+                  return (
+                    value === watch("password") || "The passwords do not match"
+                  );
                 },
               })}
               onKeyUp={() => {
                 trigger("password");
               }}
-              placeholder="Password"
+              placeholder="password"
               // onChange={(e) => setPassword(e.target.value)}
             />
             {errors.password && (
@@ -142,7 +146,9 @@ const Login = () => {
             <button
               type="button"
               className="uppercase block w-full p-4 text-lg rounded-full bg-indigo-500 hover:bg-indigo-600 focus:outline-none"
-              onClick={handleSubmit(onSubmit)}
+              onClick={(e) => {
+                notify(onSubmit);
+              }}
             >
               sign in
             </button>

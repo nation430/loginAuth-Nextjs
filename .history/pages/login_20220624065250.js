@@ -6,6 +6,8 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const {
     register,
     handleSubmit,
@@ -16,13 +18,10 @@ const Login = () => {
   const router = useRouter();
   const notify = () => toast("Wow so easy!");
 
-  const onSubmit = async (data) => {
-    let email = data.email;
-    let password = data.password;
-
-    // if (email == "" && password == "") {
-    //   return false;
-    // }
+  const onSubmit = async () => {
+    if (email == "" && password == "") {
+      return false;
+    }
 
     const res = await signIn({ email, password });
     if (res === undefined) {

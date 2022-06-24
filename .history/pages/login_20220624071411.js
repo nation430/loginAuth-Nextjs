@@ -27,6 +27,7 @@ const Login = () => {
     const res = await signIn({ email, password });
     if (res === undefined) {
       return false;
+      console.log;
     }
 
     if (res.token) {

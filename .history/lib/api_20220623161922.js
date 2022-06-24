@@ -42,6 +42,7 @@ export const login = async (data) => {
     .post("https://playtodos.herokuapp.com/api/v1/login", data)
     .then((item) => item.data)
     .catch((e) => e.error);
+  alert();
 };
 
 export const todos = async (ctx) => {

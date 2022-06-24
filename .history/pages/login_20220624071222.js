@@ -14,7 +14,6 @@ const Login = () => {
     watch,
   } = useForm();
   const router = useRouter();
-  const notify = () => toast("Wow so easy!");
 
   const onSubmit = async (data) => {
     let email = data.email;
