@@ -12,14 +12,14 @@ const Register = () => {
     trigger,
     watch,
   } = useForm();
-
+  const notify = () => toast("Wow so easy!");
   const router = useRouter();
 
   const onSubmit = async (data) => {
     try {
       const res = await signUp(data);
-      toast.dismiss();
-      toast.success("API SUCCESS Done");
+      if (res.message);
+      toast(res.message);
       console.log(res);
 
       const { token, user } = res;
@@ -27,8 +27,6 @@ const Register = () => {
 
       router.push("/todos");
     } catch (error) {
-      toast.dismiss();
-      toast.error("The email has already been taken.");
       console.log(error);
     }
     // try {
@@ -201,10 +199,11 @@ const Register = () => {
             <button
               type="submit"
               className="uppercase block w-full p-4 text-lg rounded-full bg-indigo-500 hover:bg-indigo-600 focus:outline-none"
+              onClick={notify}
             >
               Register
             </button>
-            <ToastContainer autoClose={5000} className="mt-24" />
+            <ToastContainer />
           </div>
         </form>
       </div>

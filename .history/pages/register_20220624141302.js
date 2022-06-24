@@ -1,34 +1,35 @@
 import { useRouter } from "next/router";
 import { register as signUp } from "../lib/api";
 import { useForm } from "react-hook-form";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, setError },
     trigger,
     watch,
   } = useForm();
-
   const router = useRouter();
 
   const onSubmit = async (data) => {
     try {
       const res = await signUp(data);
-      toast.dismiss();
-      toast.success("API SUCCESS Done");
-      console.log(res);
+      if (res.message) {
+        setError("");
+        console.log(res);
+      } else {
+        setError("it has been use");
+      }
+      // toast(res.message);
+      // console.log(res);
 
       const { token, user } = res;
       console.log(token);
 
       router.push("/todos");
     } catch (error) {
-      toast.dismiss();
-      toast.error("The email has already been taken.");
       console.log(error);
     }
     // try {
@@ -204,7 +205,6 @@ const Register = () => {
             >
               Register
             </button>
-            <ToastContainer autoClose={5000} className="mt-24" />
           </div>
         </form>
       </div>
