@@ -16,30 +16,13 @@ const Register = () => {
   const router = useRouter();
 
   const onSubmit = async (data) => {
-    try {
-      const res = await signUp(data);
-      toast.dismiss();
-      toast.success("API SUCCESS Done");
-      console.log(res);
-
-      const { token, user } = res;
-      console.log(token);
-
-      router.push("/todos");
-    } catch (error) {
-      toast.dismiss();
-      toast.error("The email has already been taken.");
-      console.log(error);
+    const res = await signUp(data);
+    if (res.status === 422) {
+      return toast.error(res.data);
     }
-    // try {
-
-    // } catch (error) {}
-
-    // await router.push("/login");
-
-    // dispatch(addUser(res));
-
-    // await router.push("/login");
+    toast.success("API SUCCESS Done");
+    toast.dismiss();
+    router.push("/login");
   };
 
   // useEffect(() => {
