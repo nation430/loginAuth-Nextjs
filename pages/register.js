@@ -22,16 +22,8 @@ const Register = () => {
     }
     toast.success("API SUCCESS Done");
     toast.dismiss();
-    router.push("/login");
+    router.push("/todos");
   };
-
-  // useEffect(() => {
-  //   if (!token) {
-  //     router.push("/register");
-  //   } else {
-  //     router.push("/todos");
-  //   }
-  // });
 
   return (
     <section className="min-h-screen flex items-stretch text-white ">

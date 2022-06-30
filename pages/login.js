@@ -1,9 +1,9 @@
-import { useState } from "react";
 import { useRouter } from "next/router";
 import { login as signIn } from "../lib/api";
 import { setCookies } from "../lib/auth";
 import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
   const {
@@ -11,10 +11,8 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
     trigger,
-    watch,
   } = useForm();
   const router = useRouter();
-  const notify = () => toast("Wow so easy!");
 
   const onSubmit = async (data) => {
     let email = data.email;
@@ -25,9 +23,12 @@ const Login = () => {
     // }
 
     const res = await signIn({ email, password });
-    if (res === undefined) {
-      return false;
+    if (res.status === 422) {
+      return toast.error(res.data);
     }
+    toast.success("API SUCCESS Done");
+    toast.dismiss();
+    router.push("/login");
 
     if (res.token) {
       setCookies(res);
@@ -146,6 +147,7 @@ const Login = () => {
             >
               sign in
             </button>
+            <ToastContainer autoClose={5000} className="mt-24" />
           </div>
         </form>
       </div>
